@@ -1,0 +1,4 @@
+public enum Servico {
+
+    TOSA, BANHO, HIDRATACAO, UNHACORTE, ESCOVADENTE;
+}

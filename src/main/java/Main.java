@@ -1,6 +1,5 @@
-import jdk.swing.interop.SwingInterOpUtils;
-
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -15,6 +14,7 @@ public class Main {
     public static Integer proxCodAnimal = 0;
 
     public static ArrayList<Animal> todosOsAnimais = new ArrayList<>();
+    public static ArrayList<Agendamento> todosOsAgendamentos = new ArrayList<>();
 
     public static void menuInicial() {
         Scanner ler = new Scanner(System.in);
@@ -31,9 +31,9 @@ public class Main {
             opcao = Integer.parseInt(ler.nextLine());
             switch (opcao) {
                 case 1 -> cadastroDeAnimal();
-                //case 2 -> ;
+                case 2 -> agendamentoDeServico();
                 case 3 -> listagemAnimaisCadastrados();
-                //case 4 -> ;
+                case 4 -> listagemDeAgendamentos();
             }
         } while (opcao != 5);
     }
@@ -119,6 +119,78 @@ public class Main {
             System.out.print(animal.getCor() + "\t");
             System.out.print(animal.getTemperamento() + "\t");
             System.out.println(animal.getNomeDoResponsavel());
+        }
+    }
+
+    public static void agendamentoDeServico(){
+        Scanner ler = new Scanner(System.in);
+        Agendamento agendamento = new Agendamento();
+        Animal animal = new Animal();
+        boolean excecao;
+        Integer opcao = 2;
+        Optional<Animal> animalSelecionado;
+
+        System.out.println("Agendamento de serviços");
+        System.out.println("Segue a lista de animais cadastrados no SisPet");
+        listagemAnimaisCadastrados();
+
+        do{
+            System.out.println("Informe o código do animal selecionado: ");
+            Integer codAnimalSelecionado = Integer.parseInt(ler.nextLine());
+            animalSelecionado = todosOsAnimais.stream().filter(animal1 -> animal1.getCodigo() == codAnimalSelecionado).findFirst();
+            if (animalSelecionado.isEmpty()) {
+                System.out.println("Código Inválido");
+            }
+        }while (animalSelecionado.isEmpty());
+
+        agendamento.setAnimal(animalSelecionado.get());
+
+        do{
+            System.out.println("Segue todos os serviços disponíveis para o Pet: ");
+            Stream.of(Servico.values()).forEach(System.out::println);
+            Servico servicoSelecionado = null;
+            do {
+                System.out.println("Digite o serviço desejado: ");
+                String servicoDigitado = ler.nextLine();
+                servicoDigitado = servicoDigitado.toUpperCase();
+                try{
+                    excecao = false;
+                    servicoSelecionado = Servico.valueOf(servicoDigitado);
+                }catch (Exception exception){
+                    excecao = true;
+                    System.out.println("Opção inválida");
+                }
+            }while (excecao);
+            agendamento.setServicos(servicoSelecionado);
+            System.out.println("Digite 1 para adicionar mais serviços e 2 caso contrário: ");
+            opcao = Integer.parseInt(ler.nextLine());
+        }while (opcao == 1);
+
+        System.out.println("Digite a data de inicio do serviço: ");
+        String horarioDoInicioDoServico = ler.nextLine();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
+        LocalDateTime horarioDeIncioDoServicoFormat = LocalDateTime.parse(horarioDoInicioDoServico, formato);
+        agendamento.setHorarioInical(horarioDeIncioDoServicoFormat);
+
+        System.out.println("Digite a data de termino do serviço: ");
+        String horarioDoTerminoDoServico = ler.nextLine();
+        LocalDateTime horarioDeTerminoDoServicoFormat = LocalDateTime.parse(horarioDoTerminoDoServico, formato);
+        agendamento.setHorarioFinal(horarioDeTerminoDoServicoFormat);
+
+        System.out.println("Observações: ");
+        agendamento.setObservacoes(ler.nextLine());
+
+        todosOsAgendamentos.add(agendamento);
+    }
+
+    public static void listagemDeAgendamentos(){
+        for(Agendamento a : todosOsAgendamentos){
+            System.out.print(a.getHorarioInical() + "\t");
+            System.out.print(a.getHorarioFinal() + "\t");
+            System.out.print(a.getServicos() + "\t");
+            System.out.print(a.getAnimal().getNome() + "\t");
+            System.out.print(a.getAnimal().getNomeDoResponsavel() + "\t");
+            System.out.println(a.getObservacoes());
         }
     }
 
