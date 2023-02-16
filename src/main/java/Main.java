@@ -112,12 +112,12 @@ public class Main {
 
     public static void listagemAnimaisCadastrados(){
         for(Animal animal : todosOsAnimais){
-            System.out.print(animal.getCodigo() + "\t");
-            System.out.print(animal.getNome() + "\t");
-            System.out.print(animal.getEspecie() + "\t");
-            System.out.print(animal.calculaIdade() + "\t");
-            System.out.print(animal.getCor() + "\t");
-            System.out.print(animal.getTemperamento() + "\t");
+            System.out.print(animal.getCodigo() + "|\t");
+            System.out.print(animal.getNome() + "|\t");
+            System.out.print(animal.getEspecie() + "|\t");
+            System.out.print(animal.calculaIdade() + "|\t");
+            System.out.print(animal.getCor() + "|\t");
+            System.out.print(animal.getTemperamento() + "|\t");
             System.out.println(animal.getNomeDoResponsavel());
         }
     }
@@ -166,7 +166,7 @@ public class Main {
             opcao = Integer.parseInt(ler.nextLine());
         }while (opcao == 1);
 
-        System.out.println("Digite a data de inicio do serviço (DD/MM/AAAA HH/MM): ");
+        System.out.println("Digite a data de inicio do serviço (DD/MM/AAAA HH:MM): ");
         String horarioDoInicioDoServico = ler.nextLine();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
         LocalDateTime horarioDeIncioDoServicoFormat = LocalDateTime.parse(horarioDoInicioDoServico, formato);
@@ -185,11 +185,11 @@ public class Main {
 
     public static void listagemDeAgendamentos(){
         for(Agendamento a : todosOsAgendamentos){
-            System.out.print(a.getHorarioInical() + "\t");
-            System.out.print(a.getHorarioFinal() + "\t");
-            System.out.print(a.getServicos() + "\t");
-            System.out.print(a.getAnimal().getNome() + "\t");
-            System.out.print(a.getAnimal().getNomeDoResponsavel() + "\t");
+            System.out.print(a.getHorarioInical() + " |\t");
+            System.out.print(a.getHorarioFinal() + " |\t");
+            System.out.print(a.getServicos() + " |\t");
+            System.out.print(a.getAnimal().getNome() + " |\t");
+            System.out.print(a.getAnimal().getNomeDoResponsavel() + " |\t");
             System.out.println(a.getObservacoes());
         }
     }
