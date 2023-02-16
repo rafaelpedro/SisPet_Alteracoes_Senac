@@ -50,7 +50,7 @@ public class Main {
         System.out.println("Digite o nome do Animal: ");
         animal.setNome(ler.nextLine());
 
-        System.out.println("Digite a data de nascimento do animal: ");
+        System.out.println("Digite a data de nascimento do animal (DD/MM/AAAA): ");
         String dataDeNascimentoDigitada = ler.nextLine();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("d/MM/yyyy");
         LocalDate dataNascimentoFormatada = LocalDate.parse(dataDeNascimentoDigitada, formato);
@@ -166,7 +166,7 @@ public class Main {
             opcao = Integer.parseInt(ler.nextLine());
         }while (opcao == 1);
 
-        System.out.println("Digite a data de inicio do serviço: ");
+        System.out.println("Digite a data de inicio do serviço (DD/MM/AAAA HH/MM): ");
         String horarioDoInicioDoServico = ler.nextLine();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
         LocalDateTime horarioDeIncioDoServicoFormat = LocalDateTime.parse(horarioDoInicioDoServico, formato);
